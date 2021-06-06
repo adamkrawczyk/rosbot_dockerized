@@ -3,19 +3,8 @@ version: '2.3'
 services:
     rosbot:
         build: ./
+        
+        # komentarz: obraz ma być tak zrobiony, że przy jego odapalaniu wskazuję w polu "command" na laucha'a, a nie robię jakiegoś skryptu, np:
         # command: ros2 launch my_turtle_bringup only_controller.launch.py
         command: ros2 topic list
-    husarnet:
-        image: husarnet/husarnet
-        restart: unless-stopped
-        volumes:
-            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
-        sysctls:
-            - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
-        cap_add:
-            - NET_ADMIN
-        devices:
-            - /dev/net/tun
-        env_file: 
-            - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
-        network_mode: service:rosbot  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
+
