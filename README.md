@@ -1,5 +1,6 @@
 # rosbot_dockerized
-Quick start: Nav2 + ROS2 + RViz + Physical Rosbot / Gazebo
+
+all ROSbot 2.0 of-the-shelf software dockerized
 
 ```bash
 docker-compose build
