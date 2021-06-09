@@ -3,8 +3,8 @@
 # FROM ros:eloquent-ros-base-bionic
 
 # for ROSbot 2.0 PRO
-FROM osrf/ros:foxy-desktop
-
+FROM ros:eloquent-ros-base
+ENV ROS_DISTRO=eloquent
 SHELL ["/bin/bash", "-c"]
 
 # Fix ros key
@@ -15,11 +15,10 @@ RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E
 RUN sudo apt update 
 RUN sudo apt upgrade -y 
 RUN sudo apt install -y \
-    ros-foxy-rmw-cyclonedds-cpp \
+    ros-eloquent-rmw-cyclonedds-cpp \
     wget \ 
-    ros-foxy-ament-cmake \ 
-    ros-foxy-gazebo-ros-pkgs \
-    python2
+    ros-eloquent-ament-cmake \ 
+    ros-eloquent-gazebo-ros-pkgs 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
 RUN mkdir stm32_fw && \
@@ -36,7 +35,7 @@ WORKDIR /ros2_ws
 RUN apt-get -qq update && rosdep install -y \
     --from-paths src \
     --ignore-src 
-RUN  . /opt/ros/foxy/setup.sh && colcon build
+RUN  . /opt/ros/$ROS_DISTRO/setup.sh && colcon build
 
 # Failing at this point with the following error:
 # Starting >>> astra_camera
